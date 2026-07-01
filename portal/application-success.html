@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Submitted</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a7bd1, #8e44ad);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+        }
+
+        /* Navbar */
+        .navbar{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background: #0f6cf2;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a{
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .navbar a:hover{
+            color: #4da6ff;
+        }
+
+        .success-container{
+            background: #fff;
+            padding: 60px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            margin-top: 70px;
+        }
+
+        .success-icon{
+            width: 100px;
+            height: 100px;
+            background: #4caf50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 50px;
+        }
+
+        .success-container h1{
+            color: #0f6cf2;
+            margin-bottom: 15px;
+            font-size: 32px;
+        }
+
+        .success-container p{
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .job-applied{
+            background: #f0f7ff;
+            padding: 20px;
+            border-left: 4px solid #0f6cf2;
+            margin: 30px 0;
+            text-align: left;
+            border-radius: 5px;
+        }
+
+        .job-applied h3{
+            color: #0f6cf2;
+            margin-bottom: 10px;
+        }
+
+        .job-applied p{
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .buttons{
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        button{
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary{
+            background: #0f6cf2;
+            color: #fff;
+        }
+
+        .btn-primary:hover{
+            background: #0d5ccc;
+        }
+
+        .btn-secondary{
+            background: #f0f0f0;
+            color: #0f6cf2;
+            border: 2px solid #0f6cf2;
+        }
+
+        .btn-secondary:hover{
+            background: #0f6cf2;
+            color: #fff;
+        }
+
+        .confirmation-number{
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .confirmation-number strong{
+            color: #0f6cf2;
+        }
+
+        /* Details Section */
+        .details-section{
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .details-section h3{
+            color: #0f6cf2;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #0f6cf2;
+            padding-bottom: 10px;
+        }
+
+        .details-row{
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .details-row:last-child{
+            border-bottom: none;
+        }
+
+        .details-label{
+            font-weight: bold;
+            color: #0f6cf2;
+            min-width: 120px;
+        }
+
+        .details-value{
+            color: #333;
+            text-align: right;
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .status-badge{
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .success-container{
+                padding: 40px 20px;
+            }
+
+            .buttons{
+                flex-direction: column;
+            }
+
+            button{
+                width: 100%;
+            }
+
+            .details-row{
+                flex-direction: column;
+            }
+
+            .details-value{
+                text-align: left;
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div><b>JobPortal</b></div>
+    <div>
+        <a onclick="goHome()">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">Profile</a>
+    </div>
+</div>
+
+<!-- Success Container -->
+<div class="success-container">
+    <div class="success-icon">✓</div>
+    
+    <h1>Application Submitted!</h1>
+    <p>Thank you for your interest. Your application has been successfully submitted.</p>
+    
+    <div class="confirmation-number">
+        <strong>Confirmation Number:</strong> APP-<span id="confirmNo">123456</span>
+    </div>
+
+    <div class="job-applied">
+        <h3 id="jobTitle">Job Title</h3>
+        <p><strong>Company:</strong> <span id="jobCompany">Company Name</span></p>
+        <p><strong>Applied On:</strong> <span id="appliedDate">Date</span></p>
+    </div>
+
+    <!-- Application Details Section -->
+    <div class="details-section">
+        <h3>Your Application Details</h3>
+        
+        <div class="details-row">
+            <span class="details-label">Application ID:</span>
+            <span class="details-value" id="appId">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Full Name:</span>
+            <span class="details-value" id="fullName">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Email:</span>
+            <span class="details-value" id="email">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Phone:</span>
+            <span class="details-value" id="phone">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Location:</span>
+            <span class="details-value" id="location">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Experience:</span>
+            <span class="details-value" id="experience">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Current Job Title:</span>
+            <span class="details-value" id="currentJob">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Resume:</span>
+            <span class="details-value" id="resumeName">-</span>
+        </div>
+
+        <div class="details-row">
+            <span class="details-label">Submission Time:</span>
+            <span class="details-value" id="submissionTime">-</span>
+        </div>
+
+        <div style="text-align: center;">
+            <span class="status-badge">✓ Successfully Submitted</span>
+        </div>
+    </div>
+
+    <p>We have sent a confirmation email to your registered email address. You can track the status of your application in your profile.</p>
+
+    <div class="buttons">
+        <button class="btn-primary" onclick="browseMore()">Browse More Jobs</button>
+        <button class="btn-secondary" onclick="goHome()">Back to Dashboard</button>
+    </div>
+</div>
+
+<script>
+function loadApplicationSuccess(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const company = urlParams.get('company');
+    const job = urlParams.get('job');
+    const appId = urlParams.get('appId');
+    
+    // Get stored application data
+    const appData = sessionStorage.getItem('applicationData');
+    
+    if(company && job){
+        document.getElementById('jobTitle').innerText = job;
+        document.getElementById('jobCompany').innerText = company;
+        
+        const today = new Date();
+        const dateString = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('appliedDate').innerText = dateString;
+        
+        // Show application ID
+        if(appId){
+            document.getElementById('appId').innerText = '#' + appId;
+        } else {
+            document.getElementById('appId').innerText = 'Pending...';
+        }
+    }
+    
+    // Load stored application details
+    if(appData){
+        try{
+            const data = JSON.parse(appData);
+            
+            // Populate fields
+            document.getElementById('fullName').innerText = (data.firstName || '-') + ' ' + (data.lastName || '-');
+            document.getElementById('email').innerText = data.email || '-';
+            document.getElementById('phone').innerText = data.phone || '-';
+            document.getElementById('location').innerText = data.location || '-';
+            document.getElementById('experience').innerText = (data.experience || '-') + ' years';
+            document.getElementById('currentJob').innerText = data.jobTitle || 'Not specified';
+            document.getElementById('resumeName').innerText = data.resumeFileName || 'Resume uploaded';
+            
+            // Show current date and time
+            const now = new Date();
+            const timeString = now.toLocaleString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('submissionTime').innerText = timeString;
+            
+            // Clear session data
+            sessionStorage.removeItem('applicationData');
+        } catch(e){
+            console.log('Could not parse application data');
+        }
+    } else {
+        // If no stored data, show defaults
+        document.getElementById('fullName').innerText = 'Application';
+        document.getElementById('submissionTime').innerText = new Date().toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    }
+}
+
+function goHome(){
+    window.location.href = 'dashboard.html';
+}
+
+function browseMore(){
+    window.location.href = 'dashboard.html';
+}
+
+// Load when page loads
+window.onload = loadApplicationSuccess;
+</script>
+
+</body>
+</html>

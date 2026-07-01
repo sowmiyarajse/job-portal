@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Application - HCL</title>
+    <style>
+        body{
+            margin:0;
+            font-family:Arial;
+            background:linear-gradient(135deg,#6a7bd1,#8e44ad);
+            color:#000;
+        }
+
+        /* Navbar */
+        .navbar{
+            background:#0f6cf2;
+            color:#fff;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+        }
+
+        .navbar a{
+            color:#fff;
+            margin-left:20px;
+            text-decoration:none;
+            cursor:pointer;
+        }
+
+        .navbar a:hover{
+            color:#4da6ff;
+        }
+
+        /* Container */
+        .container{
+            padding:40px 30px;
+            max-width:1000px;
+            margin:0 auto;
+        }
+
+        .back-button{
+            background:#0f6cf2;
+            color:#fff;
+            padding:10px 20px;
+            border-radius:5px;
+            text-decoration:none;
+            display:inline-block;
+            margin-bottom:20px;
+            cursor:pointer;
+        }
+
+        .back-button:hover{
+            background:#0d5ccc;
+        }
+
+        /* Job Info */
+        .job-info{
+            background:#fff;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom:30px;
+        }
+
+        .job-info h2{
+            color:#0f6cf2;
+            margin-top:0;
+        }
+
+        .job-details{
+            display:flex;
+            gap:30px;
+        }
+
+        .job-details div{
+            flex:1;
+        }
+
+        /* Form Section */
+        .form-section{
+            background:#fff;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom:30px;
+        }
+
+        .form-section h2{
+            color:#0f6cf2;
+            border-bottom:2px solid #0f6cf2;
+            padding-bottom:10px;
+        }
+
+        .form-group{
+            margin-bottom:20px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:5px;
+            color:#0f6cf2;
+            font-weight:bold;
+        }
+
+        input, textarea, select{
+            width:100%;
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            font-family:Arial;
+            box-sizing:border-box;
+        }
+
+        textarea{
+            resize:vertical;
+            min-height:120px;
+        }
+
+        .two-column{
+            display:flex;
+            gap:20px;
+        }
+
+        .two-column .form-group{
+            flex:1;
+        }
+
+        /* Resume Section */
+        .resume-section{
+            background:#f9f9f9;
+            padding:20px;
+            border-radius:5px;
+            margin-bottom:20px;
+        }
+
+        .resume-section h3{
+            color:#0f6cf2;
+            margin-top:0;
+        }
+
+        .resume-preview{
+            background:#fff;
+            padding:20px;
+            border:1px solid #ccc;
+            border-radius:5px;
+            margin-top:10px;
+            min-height:300px;
+        }
+
+        .resume-preview h4{
+            color:#0f6cf2;
+            margin-top:0;
+        }
+
+        .resume-item{
+            margin-bottom:15px;
+            padding-bottom:15px;
+            border-bottom:1px solid #e0e0e0;
+        }
+
+        .resume-item:last-child{
+            border-bottom:none;
+        }
+
+        .resume-item h5{
+            margin:0 0 5px 0;
+            color:#0f6cf2;
+        }
+
+        .resume-item p{
+            margin:5px 0;
+            color:#666;
+            font-size:14px;
+        }
+
+        /* Buttons */
+        .button-group{
+            display:flex;
+            gap:10px;
+            margin-top:30px;
+        }
+
+        button{
+            padding:12px 30px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+        }
+
+        .submit-btn{
+            background:#28a745;
+            color:#fff;
+        }
+
+        .submit-btn:hover{
+            background:#218838;
+        }
+
+        .cancel-btn{
+            background:#6c757d;
+            color:#fff;
+        }
+
+        .cancel-btn:hover{
+            background:#5a6268;
+        }
+
+        .tab-buttons{
+            display:flex;
+            gap:10px;
+            margin-bottom:20px;
+        }
+
+        .tab-btn{
+            padding:10px 20px;
+            background:#e0e0e0;
+            color:#333;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        .tab-btn.active{
+            background:#0f6cf2;
+            color:#fff;
+        }
+
+        .tab-content{
+            display:none;
+        }
+
+        .tab-content.active{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div><b>JobPortal</b></div>
+    <div>
+        <a onclick="goHome()">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">Profile</a>
+    </div>
+</div>
+
+<!-- Container -->
+<div class="container">
+    <a class="back-button" onclick="goBack()">← Back</a>
+
+    <!-- Job Info -->
+    <div class="job-info">
+        <h2>Apply for Position</h2>
+        <div class="job-details">
+            <div>
+                <h4 id="jobTitle"></h4>
+                <p><strong>Company:</strong> <span id="company"></span></p>
+            </div>
+            <div>
+                <p><strong>Application Date:</strong> <span id="appDate"></span></p>
+                <p><strong>Status:</strong> <span style="color:#28a745;">In Progress</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="switchTab('personal')">Personal Details</button>
+        <button class="tab-btn" onclick="switchTab('resume')">Resume</button>
+    </div>
+
+    <!-- Personal Details Form -->
+    <div id="personal" class="tab-content active">
+        <div class="form-section">
+            <h2>Personal Information</h2>
+            <form id="applicationForm">
+                <div class="two-column">
+                    <div class="form-group">
+                        <label>First Name *</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name *</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="form-group">
+                        <label>Current Location *</label>
+                        <input type="text" id="location" value="Chennai" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Years of Experience *</label>
+                        <input type="number" id="experience" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Current Job Title</label>
+                    <input type="text" id="jobTitle" placeholder="e.g., Senior Java Developer">
+                </div>
+
+                <div class="form-group">
+                    <label>Cover Letter</label>
+                    <textarea id="coverLetter" placeholder="Tell us why you're interested in this position..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Resume (PDF/DOC) *</label>
+                    <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" required>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resume Tab -->
+    <div id="resume" class="tab-content">
+        <div class="form-section">
+            <h2>Resume Example</h2>
+            
+            <div class="resume-section">
+                <h3>Complete HCL Job Application Resume Example</h3>
+                <div class="resume-preview">
+                    <h4>Rajesh Kumar</h4>
+                    <p style="color:#666; margin:0;">Senior Java Developer | Chennai | +91-98765-43210 | rajesh.kumar@email.com</p>
+                    
+                    <div class="resume-item">
+                        <h5>PROFESSIONAL SUMMARY</h5>
+                        <p>Experienced Senior Java Developer with 6+ years of proven expertise in designing and developing scalable enterprise applications. Strong proficiency in Java, Spring Framework, Microservices, and Cloud technologies. Skilled in leading development teams and delivering high-quality solutions on time.</p>
+                    </div>
+
+                    <div class="resume-item">
+                        <h5>EXPERIENCE</h5>
+                        <h5 style="color:#333; margin-bottom:3px;">Senior Java Developer - Acme Tech Solutions (2020 - Present)</h5>
+                        <p>• Led development of 5+ microservices using Spring Boot and REST APIs; Improved performance by 40%</p>
+                        <p>• Mentored 4 junior developers and conducted code reviews ensuring code quality</p>
+                        <p>• Implemented CI/CD pipelines using Jenkins and Docker reducing deployment time by 50%</p>
+                        
+                        <h5 style="color:#333; margin-bottom:3px; margin-top:10px;">Java Developer - Tech Solutions Inc. (2018 - 2020)</h5>
+                        <p>• Developed and maintained 10+ enterprise applications using Java and Spring Framework</p>
+                        <p>• Designed and implemented RESTful web services handling 500K+ daily transactions</p>
+                        <p>• Collaborated with cross-functional teams to deliver features on schedule</p>
+                    </div>
+
+                    <div class="resume-item">
+                        <h5>SKILLS</h5>
+                        <p><strong>Languages:</strong> Java, Python, SQL, JavaScript</p>
+                        <p><strong>Frameworks:</strong> Spring Boot, Spring MVC, Hibernate, JUnit</p>
+                        <p><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB</p>
+                        <p><strong>Cloud & DevOps:</strong> AWS, Docker, Kubernetes, Jenkins, Git</p>
+                    </div>
+
+                    <div class="resume-item">
+                        <h5>EDUCATION</h5>
+                        <p><strong>Bachelor of Engineering in Computer Science</strong> - Anna University, Chennai (2018)</p>
+                        <p><strong>Certifications:</strong> AWS Solutions Architect Associate, Oracle Certified Associate Java Programmer</p>
+                    </div>
+
+                    <div class="resume-item">
+                        <h5>KEY ACHIEVEMENTS</h5>
+                        <p>• Winner of "Best Developer Award" 2022 at previous company</p>
+                        <p>• Reduced application response time from 2s to 200ms through optimization</p>
+                        <p>• Successfully migrated legacy monolith to microservices architecture</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Buttons -->
+    <div class="button-group">
+        <button class="submit-btn" onclick="submitApplication()">Submit Application</button>
+        <button class="cancel-btn" onclick="goBack()">Cancel</button>
+    </div>
+</div>
+
+<script>
+function loadApplicationDetails(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const job = urlParams.get('job');
+    const company = urlParams.get('company');
+    
+    if(job && company){
+        document.getElementById('jobTitle').innerText = job;
+        document.getElementById('company').innerText = company;
+    }
+    
+    const today = new Date();
+    const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('appDate').innerText = dateStr;
+}
+
+function switchTab(tabName){
+    // Hide all tabs
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+    
+    // Deactivate all buttons
+    const buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    // Show selected tab
+    document.getElementById(tabName).classList.add('active');
+    
+    // Activate corresponding button
+    event.target.classList.add('active');
+}
+
+function submitApplication(){
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const location = document.getElementById('location').value;
+    const experience = document.getElementById('experience').value;
+    const jobTitle = document.getElementById('jobTitle').value;
+    const coverLetter = document.getElementById('coverLetter').value;
+    const resumeFileInput = document.getElementById('resumeFile');
+    const resumeFile = resumeFileInput.files[0];
+    
+    if(!firstName || !lastName || !email || !phone || !experience || !resumeFile){
+        alert('Please fill all required fields marked with *');
+        return;
+    }
+    
+    // Validate phone number
+    if(!/^\d{10}$|^\+91\d{10}$/.test(phone.replace(/[-\s]/g, ''))){
+        alert('Please enter a valid phone number');
+        return;
+    }
+    
+    // Validate email
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        alert('Please enter a valid email address');
+        return;
+    }
+    
+    // Show loading message
+    alert('Submitting your application...');
+    
+    // Store application data in session storage for success page
+    const applicationData = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        location: location,
+        experience: experience,
+        jobTitle: jobTitle,
+        coverLetter: coverLetter,
+        resumeFileName: resumeFile.name
+    };
+    sessionStorage.setItem('applicationData', JSON.stringify(applicationData));
+    
+    // Create FormData to send file and other data
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('location', location);
+    formData.append('experience', experience);
+    formData.append('jobTitle', jobTitle);
+    formData.append('coverLetter', coverLetter);
+    formData.append('resume', resumeFile);
+    
+    // Get company and job from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const company = urlParams.get('company') || 'Company';
+    const job = urlParams.get('job') || 'Position';
+    formData.append('company', company);
+    formData.append('position', job);
+    
+    // Send to backend
+    fetch('http://localhost:8080/api/applications/submit', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if(!response.ok){
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if(data.success){
+            // Redirect to success page with application ID
+            window.location.href = `application-success.html?company=${encodeURIComponent(company)}&job=${encodeURIComponent(job)}&appId=${data.applicationId}`;
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting application. Please check if the backend is running on http://localhost:8080');
+    });
+}
+
+function goHome(){
+    window.location.href = 'dashboard.html';
+}
+
+function goBack(){
+    history.back();
+}
+
+// Load details when page loads
+window.onload = loadApplicationDetails;
+</script>
+
+</body>
+</html>

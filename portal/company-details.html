@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Details</title>
+    <style>
+        body{
+            margin:0;
+            font-family:Arial;
+            background:linear-gradient(135deg,#6a7bd1,#8e44ad);
+            color:#000;
+        }
+
+        /* Navbar */
+        .navbar{
+            background:#0f6cf2;
+            color:#fff;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+        }
+
+        .navbar a{
+            color:#fff;
+            margin-left:20px;
+            text-decoration:none;
+            cursor:pointer;
+        }
+
+        .navbar a:hover{
+            color:#4da6ff;
+        }
+
+        /* Container */
+        .container{
+            padding:40px 30px;
+            max-width:1000px;
+            margin:0 auto;
+        }
+
+        .back-button{
+            background:#0f6cf2;
+            color:#fff;
+            padding:10px 20px;
+            border-radius:5px;
+            text-decoration:none;
+            display:inline-block;
+            margin-bottom:20px;
+            cursor:pointer;
+        }
+
+        .back-button:hover{
+            background:#0d5ccc;
+        }
+
+        /* Company Header */
+        .company-header{
+            background:#fff;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom:30px;
+        }
+
+        .company-header h1{
+            margin-top:0;
+            color:#0f6cf2;
+        }
+
+        /* Three Column Layout */
+        .details-section{
+            display:flex;
+            gap:20px;
+            margin-top:20px;
+        }
+
+        .detail-card{
+            flex:1;
+            background:#fff;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .detail-card h3{
+            color:#0f6cf2;
+            margin-top:0;
+            border-bottom:2px solid #0f6cf2;
+            padding-bottom:10px;
+        }
+
+        .detail-card ul{
+            list-style:none;
+            padding:0;
+        }
+
+        .detail-card ul li{
+            padding:8px 0;
+            border-bottom:1px solid #eee;
+        }
+
+        .detail-card ul li:last-child{
+            border-bottom:none;
+        }
+
+        /* Job Details Section */
+        .job-details{
+            background:#fff;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+            margin-top:30px;
+            display:none;
+        }
+
+        .job-details.show{
+            display:block;
+        }
+
+        .job-details h2{
+            color:#0f6cf2;
+            margin-top:0;
+        }
+
+        .job-details h3{
+            color:#333;
+            margin-top:20px;
+            border-left:4px solid #0f6cf2;
+            padding-left:15px;
+        }
+
+        .job-details ul, .job-details ol{
+            margin:10px 0;
+            padding-left:20px;
+        }
+
+        .job-details li{
+            margin:8px 0;
+            line-height:1.6;
+        }
+
+        .apply-button{
+            background:#0f6cf2;
+            color:#fff;
+            padding:12px 30px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+            margin-top:20px;
+            transition:background 0.3s;
+        }
+
+        .apply-button:hover{
+            background:#0d5ccc;
+        }
+
+        .close-job{
+            color:#999;
+            float:right;
+            font-size:24px;
+            cursor:pointer;
+        }
+
+        .close-job:hover{
+            color:#000;
+        }
+
+        /* Clickable role */
+        .detail-card ul li{
+            cursor:pointer;
+            transition:background 0.3s;
+            padding:10px;
+            margin:0 -10px;
+            border-radius:5px;
+        }
+
+        .detail-card ul li:hover{
+            background:#f0f0f0;
+        }
+
+        /* Navigation buttons */
+        .job-navigation{
+            display:flex;
+            gap:15px;
+            margin-top:20px;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .nav-button{
+            background:#0f6cf2;
+            color:#fff;
+            padding:10px 20px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:14px;
+            transition:background 0.3s;
+        }
+
+        .nav-button:hover:not(:disabled){
+            background:#0d5ccc;
+        }
+
+        .nav-button:disabled{
+            background:#ccc;
+            cursor:not-allowed;
+        }
+
+        .job-counter{
+            color:#666;
+            font-size:14px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div><b>JobPortal</b></div>
+    <div>
+        <a onclick="goHome()">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">Profile</a>
+    </div>
+</div>
+
+<!-- Container -->
+<div class="container">
+    <a class="back-button" onclick="goHome()">← Back to Dashboard</a>
+
+    <!-- Company Header -->
+    <div class="company-header">
+        <h1 id="companyName"></h1>
+        <p id="companyTagline"></p>
+    </div>
+
+    <!-- Three Column Details -->
+    <div class="details-section">
+        <!-- Overview -->
+        <div class="detail-card">
+            <h3>Overview</h3>
+            <p id="companyOverview"></p>
+        </div>
+
+        <!-- Location -->
+        <div class="detail-card">
+            <h3>Locations</h3>
+            <ul id="companyLocations"></ul>
+        </div>
+
+        <!-- Open Roles -->
+        <div class="detail-card">
+            <h3>Open Roles</h3>
+            <ul id="companyRoles"></ul>
+        </div>
+    </div>
+
+    <!-- Job Details Section -->
+    <div class="job-details" id="jobDetails">
+        <span class="close-job" onclick="closeJobDetails()">×</span>
+        <h2 id="jobTitle"></h2>
+        <p id="jobCompany" style="color:#999; margin:10px 0 20px;"></p>
+        
+        <h3>About the Role</h3>
+        <p id="jobAbout"></p>
+        
+        <h3>Responsibilities</h3>
+        <ul id="jobResponsibilities"></ul>
+        
+        <h3>Qualifications</h3>
+        <ul id="jobQualifications"></ul>
+        
+        <button class="apply-button" onclick="applyNow()">Apply Now</button>
+
+        <!-- Navigation -->
+        <div class="job-navigation">
+            <button class="nav-button" onclick="previousJob()" id="prevBtn">← Previous</button>
+            <span class="job-counter"><span id="jobCounter">1</span> of <span id="jobTotal">6</span></span>
+            <button class="nav-button" onclick="nextJob()" id="nextBtn">Next →</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Company Data
+const companyData = {
+    "HCL": {
+        tagline: "HCL Technologies - Global IT Services Leader",
+        overview: "HCL Technologies is a global IT services leader with presence in 52 countries. We deliver comprehensive IT services including Infrastructure Services, Engineering & R&D Services, Business Process Services, and more.",
+        locations: ["Noida, India", "Bangalore, USA", "New Jersey, USA", "London, UK", "Tokyo, Japan"],
+        roles: [
+            {
+                title: "Java Developer",
+                about: "We are looking for experienced Java developers to join our development team. You will work on building scalable, high-performance applications and contribute to the full development lifecycle.",
+                responsibilities: [
+                    "Design and develop Java applications using Spring Framework",
+                    "Write clean, maintainable code with proper documentation",
+                    "Participate in code reviews and technical discussions",
+                    "Collaborate with product and design teams",
+                    "Debug and optimize application performance"
+                ],
+                qualifications: [
+                    "5+ years of experience in Java development",
+                    "Strong knowledge of Spring Boot and Microservices",
+                    "Experience with REST APIs and databases",
+                    "Excellent problem-solving skills",
+                    "Bachelor's degree in Computer Science or related field"
+                ]
+            },
+            {
+                title: "Cloud Engineer",
+                about: "Join our cloud infrastructure team to design and implement cloud solutions. You'll work with AWS and Azure platforms to build secure, scalable infrastructure for our enterprise clients.",
+                responsibilities: [
+                    "Design cloud architecture solutions",
+                    "Implement infrastructure as code (IaC)",
+                    "Manage cloud deployments and scalability",
+                    "Monitor performance and optimize costs",
+                    "Provide technical support to development teams"
+                ],
+                qualifications: [
+                    "3+ years of cloud platform experience (AWS/Azure)",
+                    "Knowledge of containerization (Docker, Kubernetes)",
+                    "Experience with CI/CD pipelines",
+                    "Strong Linux and networking knowledge",
+                    "AWS or Azure certification preferred"
+                ]
+            },
+            {
+                title: "Data Scientist",
+                about: "We're seeking a Data Scientist to leverage machine learning and statistical analysis to solve complex business problems and drive data-informed decision making.",
+                responsibilities: [
+                    "Develop machine learning models and algorithms",
+                    "Perform data analysis and statistical modeling",
+                    "Create data visualizations and dashboards",
+                    "Work with large datasets using Python and SQL",
+                    "Communicate findings to stakeholders"
+                ],
+                qualifications: [
+                    "Master's degree in Data Science, Statistics, or related field",
+                    "3+ years of experience in data science",
+                    "Proficiency in Python, R, and SQL",
+                    "Experience with ML frameworks (TensorFlow, scikit-learn)",
+                    "Strong mathematical and statistical foundation"
+                ]
+            },
+            {
+                title: "QA Analyst",
+                about: "Join our Quality Assurance team to ensure the highest quality of our software products. You'll develop test strategies, execute tests, and work closely with development teams.",
+                responsibilities: [
+                    "Create and execute test cases and test plans",
+                    "Perform manual and automated testing",
+                    "Identify and document bugs and issues",
+                    "Collaborate with developers to resolve issues",
+                    "Maintain test documentation and reports"
+                ],
+                qualifications: [
+                    "2+ years of QA testing experience",
+                    "Knowledge of test automation tools (Selenium, UFT)",
+                    "Understanding of software development lifecycle",
+                    "Attention to detail and analytical mindset",
+                    "Diploma or Bachelor's in IT or related field"
+                ]
+            },
+            {
+                title: "DevOps Engineer",
+                about: "We're looking for a DevOps Engineer to optimize our development and deployment processes. You'll automate infrastructure, manage deployments, and improve system reliability.",
+                responsibilities: [
+                    "Automate deployment and infrastructure management",
+                    "Build and maintain CI/CD pipelines",
+                    "Monitor system performance and health",
+                    "Implement security best practices",
+                    "Provide operational support to development teams"
+                ],
+                qualifications: [
+                    "3+ years of DevOps or systems engineering experience",
+                    "Experience with Linux and cloud platforms",
+                    "Knowledge of containerization and orchestration",
+                    "Scripting skills in Bash or Python",
+                    "Experience with monitoring tools (Prometheus, ELK)"
+                ]
+            },
+            {
+                title: "Business Analyst",
+                about: "As a Business Analyst, you'll bridge the gap between business stakeholders and technical teams. You'll gather requirements, analyze processes, and drive solution design.",
+                responsibilities: [
+                    "Gather and document business requirements",
+                    "Conduct process analysis and improvement studies",
+                    "Create functional specifications and documentation",
+                    "Facilitate meetings with stakeholders",
+                    "Track project progress and deliverables"
+                ],
+                qualifications: [
+                    "3+ years of business analysis experience",
+                    "Strong communication and documentation skills",
+                    "Knowledge of software development lifecycle",
+                    "Experience with business intelligence tools",
+                    "Bachelor's degree in Business, IT, or related field"
+                ]
+            }
+        ]
+    },
+    "Infosys": {
+        tagline: "Infosys - Digital Systems & Services Company",
+        overview: "Infosys is a global leader in next-generation digital services and consulting. We enable clients in more than 50 countries to navigate their digital transformation journey.",
+        locations: ["Bangalore, India", "Pune, India", "Hyderabad, India", "San Francisco, USA", "Toronto, Canada", "Amsterdam, Netherlands"],
+        roles: [
+            {
+                title: "Software Engineer",
+                about: "Build innovative software solutions as a Software Engineer at Infosys. Work with cutting-edge technologies and deliver solutions for global enterprise clients.",
+                responsibilities: [
+                    "Develop and maintain software applications",
+                    "Participate in design and architecture reviews",
+                    "Write unit tests and ensure code quality",
+                    "Collaborate with cross-functional teams",
+                    "Support production deployments"
+                ],
+                qualifications: [
+                    "2+ years software development experience",
+                    "Strong programming skills in Java/Python/C++",
+                    "Knowledge of databases and SQL",
+                    "Familiarity with Agile methodologies",
+                    "Bachelor's degree in Computer Science"
+                ]
+            },
+            {
+                title: "Systems Engineer",
+                about: "Design and implement robust system solutions that power enterprise infrastructure. You'll work on system integration, optimization, and maintenance at scale.",
+                responsibilities: [
+                    "Design system architecture and infrastructure",
+                    "Implement and optimize system components",
+                    "Troubleshoot and resolve system issues",
+                    "Perform system upgrades and migrations",
+                    "Document system configurations and procedures"
+                ],
+                qualifications: [
+                    "3+ years systems administration experience",
+                    "Knowledge of Windows and Linux environments",
+                    "Experience with virtualization and cloud platforms",
+                    "Strong networking and security knowledge",
+                    "Relevant certifications preferred"
+                ]
+            },
+            {
+                title: "Test Engineer",
+                about: "Ensure quality and reliability of enterprise software solutions. Design comprehensive test strategies and execute both manual and automated testing across platforms.",
+                responsibilities: [
+                    "Design and execute comprehensive test cases",
+                    "Develop and maintain automated test scripts",
+                    "Perform regression and performance testing",
+                    "Report defects and work with developers",
+                    "Review test coverage and metrics"
+                ],
+                qualifications: [
+                    "2+ years testing experience",
+                    "Proficiency in test automation tools",
+                    "Knowledge of testing methodologies",
+                    "Strong analytical and problem-solving skills",
+                    "Bachelor's in IT or related discipline"
+                ]
+            },
+            {
+                title: "Consultant",
+                about: "Provide strategic consulting services to global clients. You'll analyze business challenges and propose innovative technology solutions to drive business growth.",
+                responsibilities: [
+                    "Analyze client business requirements and challenges",
+                    "Design strategic IT solutions",
+                    "Develop implementation roadmaps",
+                    "Lead client presentations and workshops",
+                    "Manage consulting engagements"
+                ],
+                qualifications: [
+                    "5+ years IT consulting or relevant experience",
+                    "Strong business acumen and domain knowledge",
+                    "Excellent presentation and communication skills",
+                    "Project management experience",
+                    "MBA or relevant advanced degree preferred"
+                ]
+            },
+            {
+                title: "Database Administrator",
+                about: "Manage and optimize enterprise databases. Ensure data security, availability, and performance while supporting critical business applications.",
+                responsibilities: [
+                    "Manage database installations and configurations",
+                    "Create and implement backup and recovery strategies",
+                    "Monitor database performance and troubleshoot issues",
+                    "Implement security and access controls",
+                    "Optimize queries and database structure"
+                ],
+                qualifications: [
+                    "3+ years DBA experience",
+                    "Expertise in Oracle, MySQL, or SQL Server",
+                    "Knowledge of database optimization",
+                    "Understanding of backup and disaster recovery",
+                    "Strong problem-solving abilities"
+                ]
+            },
+            {
+                title: "Security Analyst",
+                about: "Protect enterprise infrastructure and data from security threats. You'll identify vulnerabilities, implement security measures, and respond to incidents.",
+                responsibilities: [
+                    "Conduct security assessments and penetration testing",
+                    "Monitor and analyze security events",
+                    "Implement security controls and policies",
+                    "Respond to security incidents",
+                    "Maintain security documentation"
+                ],
+                qualifications: [
+                    "3+ years security experience",
+                    "Knowledge of network security and firewalls",
+                    "Understanding of security protocols and standards",
+                    "Familiarity with SIEM and security tools",
+                    "Security certifications (CISSP, CEH) preferred"
+                ]
+            }
+        ]
+    },
+    "Wipro": {
+        tagline: "Wipro - IT Services & Consulting Company",
+        overview: "Wipro is a leading global information technology, consulting and business process services company. We operate across six continents and serve over 1200 client engagements.",
+        locations: ["Bangalore, India", "Chennai, India", "Kolkata, India", "Dallas, USA", "London, UK", "Singapore"],
+        roles: [
+            {
+                title: "Full Stack Developer",
+                about: "Join our development team to create end-to-end web solutions. You'll work with modern frontend and backend technologies to deliver seamless user experiences.",
+                responsibilities: [
+                    "Develop full-stack web applications",
+                    "Design responsive user interfaces",
+                    "Build and maintain backend APIs",
+                    "Implement database solutions",
+                    "Deploy and maintain applications"
+                ],
+                qualifications: [
+                    "3+ years full-stack development experience",
+                    "Proficiency in HTML, CSS, JavaScript/React/Vue",
+                    "Backend knowledge (Node.js, Python, Java)",
+                    "Database design and optimization skills",
+                    "Bachelor's degree in Computer Science"
+                ]
+            },
+            {
+                title: "Python Developer",
+                about: "Build scalable backend solutions using Python. You'll work on data processing, API development, and system integration for enterprise clients.",
+                responsibilities: [
+                    "Develop Python applications and APIs",
+                    "Write clean and efficient code",
+                    "Integrate third-party services",
+                    "Optimize application performance",
+                    "Collaborate with frontend teams"
+                ],
+                qualifications: [
+                    "2+ years Python development experience",
+                    "Strong Python fundamentals",
+                    "Experience with web frameworks (Django, Flask)",
+                    "Database and SQL knowledge",
+                    "Version control and testing experience"
+                ]
+            },
+            {
+                title: "Infrastructure Engineer",
+                about: "Design and manage infrastructure solutions supporting mission-critical applications. You'll ensure high availability, security, and scalability of systems.",
+                responsibilities: [
+                    "Deploy and manage cloud infrastructure",
+                    "Implement disaster recovery and backup solutions",
+                    "Monitor system health and performance",
+                    "Optimize infrastructure costs",
+                    "Implement security controls"
+                ],
+                qualifications: [
+                    "3+ years infrastructure/operations experience",
+                    "Cloud platform expertise (AWS/Azure/GCP)",
+                    "Knowledge of automation and IaC tools",
+                    "Networking and security fundamentals",
+                    "Cloud certifications preferred"
+                ]
+            },
+            {
+                title: "Technical Consultant",
+                about: "Leverage your technical expertise to guide clients through digital transformation. Design and implement innovative solutions aligned with business goals.",
+                responsibilities: [
+                    "Assess client technical infrastructure",
+                    "Design technology solutions",
+                    "Lead implementation projects",
+                    "Provide technical guidance and best practices",
+                    "Mentor junior technical staff"
+                ],
+                qualifications: [
+                    "5+ years technical experience",
+                    "Deep knowledge in specific technology domain",
+                    "Strong communication and leadership skills",
+                    "Project management experience",
+                    "Degree in relevant IT/Engineering field"
+                ]
+            },
+            {
+                title: "ML Engineer",
+                about: "Build intelligent systems using machine learning. You'll develop models, implement pipelines, and drive AI-powered solutions for enterprise clients.",
+                responsibilities: [
+                    "Develop and train ML/AI models",
+                    "Build ML pipelines and infrastructure",
+                    "Evaluate model performance and optimize",
+                    "Implement deep learning solutions",
+                    "Collaborate with data scientists and engineers"
+                ],
+                qualifications: [
+                    "2+ years ML engineering experience",
+                    "Proficiency in Python and ML frameworks",
+                    "Strong math and statistical knowledge",
+                    "Experience with deep learning",
+                    "Bachelor's in CS, Math, or related field"
+                ]
+            },
+            {
+                title: "IT Support Specialist",
+                about: "Provide technical support to end users and teams. Troubleshoot issues, manage IT infrastructure, and ensure smooth operations across the organization.",
+                responsibilities: [
+                    "Provide first and second-level technical support",
+                    "Troubleshoot hardware and software issues",
+                    "Manage user accounts and access controls",
+                    "Install and configure IT systems",
+                    "Maintain IT asset inventory"
+                ],
+                qualifications: [
+                    "2+ years IT support experience",
+                    "Knowledge of Windows and Linux systems",
+                    "Networking and hardware troubleshooting skills",
+                    "Customer service orientation",
+                    "Relevant IT certifications preferred"
+                ]
+            }
+        ]
+    }
+};
+
+function loadCompanyDetails(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const company = urlParams.get('company');
+    
+    if(company && companyData[company]){
+        const data = companyData[company];
+        
+        document.getElementById('companyName').innerText = company;
+        document.getElementById('companyTagline').innerText = data.tagline;
+        document.getElementById('companyOverview').innerText = data.overview;
+        
+        // Populate locations
+        const locationsHtml = data.locations.map(loc => `<li>📍 ${loc}</li>`).join('');
+        document.getElementById('companyLocations').innerHTML = locationsHtml;
+        
+        // Populate roles with onclick handlers
+        const rolesHtml = data.roles.map((role, index) => `<li onclick="showJobDetails('${company}', ${index})">💼 ${typeof role === 'string' ? role : role.title}</li>`).join('');
+        document.getElementById('companyRoles').innerHTML = rolesHtml;
+    } else {
+        alert('Company not found!');
+        window.location.href = 'dashboard.html';
+    }
+}
+
+let currentCompany = '';
+let currentJobIndex = '';
+
+function showJobDetails(company, jobIndex){
+    currentCompany = company;
+    currentJobIndex = jobIndex;
+    const job = companyData[company].roles[jobIndex];
+    
+    document.getElementById('jobTitle').innerText = job.title;
+    document.getElementById('jobCompany').innerText = `${company} • Job Details`;
+    document.getElementById('jobAbout').innerText = job.about;
+    
+    const responsibilitiesHtml = job.responsibilities.map(resp => `<li>${resp}</li>`).join('');
+    document.getElementById('jobResponsibilities').innerHTML = responsibilitiesHtml;
+    
+    const qualificationsHtml = job.qualifications.map(qual => `<li>${qual}</li>`).join('');
+    document.getElementById('jobQualifications').innerHTML = qualificationsHtml;
+    
+    document.getElementById('jobDetails').classList.add('show');
+    updateNavigationButtons();
+}
+
+function closeJobDetails(){
+    document.getElementById('jobDetails').classList.remove('show');
+}
+
+function nextJob(){
+    const totalRoles = companyData[currentCompany].roles.length;
+    if(currentJobIndex < totalRoles - 1){
+        currentJobIndex++;
+        showJobDetails(currentCompany, currentJobIndex);
+    }
+}
+
+function previousJob(){
+    if(currentJobIndex > 0){
+        currentJobIndex--;
+        showJobDetails(currentCompany, currentJobIndex);
+    }
+}
+
+function updateNavigationButtons(){
+    const totalRoles = companyData[currentCompany].roles.length;
+    document.getElementById('jobCounter').innerText = currentJobIndex + 1;
+    document.getElementById('jobTotal').innerText = totalRoles;
+    
+    // Disable previous button if on first job
+    document.getElementById('prevBtn').disabled = currentJobIndex === 0;
+    
+    // Disable next button if on last job
+    document.getElementById('nextBtn').disabled = currentJobIndex === totalRoles - 1;
+}
+
+function applyNow(){
+    const jobTitle = companyData[currentCompany].roles[currentJobIndex].title;
+    window.location.href = `application.html?company=${currentCompany}&job=${encodeURIComponent(jobTitle)}`;
+}
+
+function goHome(){
+    window.location.href = 'dashboard.html';
+}
+
+// Load details when page loads
+window.onload = loadCompanyDetails;
+</script>
+
+</body>
+</html>

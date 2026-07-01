@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body{
+            margin:0;
+            font-family:Arial;
+            background:linear-gradient(135deg,#6a7bd1,#8e44ad);
+            color:#000;
+        }
+
+        /* Navbar */
+        .navbar{
+            background:#0f6cf2;
+            color:#fff;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .navbar-left{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:24px;
+        }
+
+        .navbar-right{
+            display:flex;
+            align-items:center;
+            gap:20px;
+        }
+
+        .navbar a{
+            color:#fff;
+            text-decoration:none;
+            cursor:pointer;
+        }
+
+        .navbar a:hover{
+            color:#4da6ff;
+        }
+
+        .user-icon{
+            font-size:24px;
+            cursor:pointer;
+        }
+
+        /* Banner */
+        .banner{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:40px;
+            color:#fff;
+            background:linear-gradient(90deg,#6a00ff,#8e44ad);
+        }
+
+        .banner img{
+            width:100%;
+            border-radius:10px;
+        }
+
+        /* Cards */
+        .cards{
+            display:flex;
+            gap:20px;
+            padding:30px;
+        }
+
+        .card{
+            background:#fff;
+            padding:20px;
+            border-radius:10px;
+            width:30%;
+            cursor:pointer;
+            transition:transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .search-box{
+            padding:0 30px 30px;
+        }
+
+        input{
+            width:80%;
+            padding:10px;
+        }
+        button{
+            padding:10px;
+            background:#0f6cf2;
+            color:#fff;
+            border:none;
+            cursor:pointer;
+        }
+
+        .card{
+            background:#fff;
+            padding:20px;
+            border-radius:10px;
+            width:30%;
+        }
+
+        .hidden{
+            display:none;
+        }
+
+        /* Footer */
+        .footer{
+            background:#0f3c7a;
+            color:#fff;
+            padding:40px 30px;
+            margin-top:50px;
+        }
+
+        .footer-content{
+            display:flex;
+            justify-content:space-between;
+            gap:40px;
+            flex-wrap:wrap;
+        }
+
+        .footer-section h4{
+            margin-top:0;
+            color:#4da6ff;
+        }
+
+        .footer-section ul{
+            list-style:none;
+            padding:0;
+        }
+
+        .footer-section ul li{
+            padding:5px 0;
+        }
+
+        .footer-section a{
+            color:#fff;
+            text-decoration:none;
+        }
+
+        .footer-section a:hover{
+            color:#4da6ff;
+        }
+
+        .footer-bottom{
+            text-align:center;
+            margin-top:30px;
+            padding-top:20px;
+            border-top:1px solid #4da6ff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <div class="navbar-left">
+        <span>💼</span>
+        <b>JobPortal</b>
+    </div>
+    <div class="navbar-right">
+        <a href="#">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">Profile</a>
+        <span class="user-icon">👤</span>
+    </div>
+</div>
+
+<!-- Banner Section -->
+<div class="banner">
+    <div>
+        <h1>Welcome to your Dashboard</h1>
+        <p>Find your best career opportunity here 🚀</p>
+    </div>
+
+    <!-- Banner Image -->
+    <img src="banner.jpg" alt="Banner Image">
+</div>
+
+<!-- Company Cards -->
+<div class="cards" id="cardsList">
+    <div class="card" onclick="goToCompany('HCL')">
+        <h3>HCL</h3>
+        <p>HCLTech is a globally recognized leader in the tech and IT industry</p>
+    </div>
+    <div class="card" onclick="goToCompany('Infosys')">
+        <h3>Infosys</h3>
+        <p>Consumer devices and cloud services</p>
+    </div>
+    <div class="card" onclick="goToCompany('Wipro')">
+        <h3>Wipro</h3>
+        <p>Enterprise software solutions</p>
+    </div>
+</div>
+
+<!-- Search -->
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search companies or roles" onkeyup="filterCompanies()">
+    <button onclick="filterCompanies()">Search</button>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>About HCL</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Company News</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Careers</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="#">IT Services</a></li>
+                <li><a href="#">Cloud Solutions</a></li>
+                <li><a href="#">Digital Transformation</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Job Portal</h4>
+            <ul>
+                <li><a href="#">Browse Jobs</a></li>
+                <li><a href="#">Apply Now</a></li>
+                <li><a href="#">Post a Job</a></li>
+                <li><a href="#">Contact HR</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <ul>
+                <li>Email: careers@hcl.com</li>
+                <li>Phone: +1-800-HCL-JOBS</li>
+                <li><a href="#">Find an Office</a></li>
+                <li><a href="#">Follow Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 HCL Technologies. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+</div>
+
+<script>
+function filterCompanies(){
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let cards = document.querySelectorAll(".card");
+    
+    cards.forEach(card => {
+        let companyName = card.querySelector("h3").innerText.toLowerCase();
+        let companyDesc = card.querySelector("p").innerText.toLowerCase();
+        
+        if(companyName.includes(input) || companyDesc.includes(input)){
+            card.classList.remove("hidden");
+        } else {
+            card.classList.add("hidden");
+        }
+    });
+}
+
+function goToCompany(company){
+    window.location.href = "company-details.html?company=" + company;
+}
+</script>
+
+</body>
+</html>

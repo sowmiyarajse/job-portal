@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:linear-gradient(135deg,#0f4c81,#9b59b6);
+            font-family:Arial;
+            margin:0;
+        }
+        .login-box{
+            background:#fff;
+            padding:40px;
+            width:350px;
+            border-radius:10px;
+            text-align:center;
+            box-shadow:0 5px 20px rgba(0,0,0,0.3);
+        }
+        .logo{
+            width:100px;
+            height:100px;
+            margin:0 auto 20px;
+            background:#0f4c81;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-size:40px;
+            font-weight:bold;
+        }
+        h2{
+            color:#0f4c81;
+            margin-top:0;
+        }
+        .input-group{
+            position:relative;
+            margin:15px 0;
+        }
+        input{
+            width:100%;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:5px;
+            font-size:14px;
+            box-sizing:border-box;
+        }
+        input:focus{
+            outline:none;
+            border-color:#0f4c81;
+            box-shadow:0 0 5px rgba(15,76,129,0.3);
+        }
+        .password-toggle{
+            position:absolute;
+            right:10px;
+            top:12px;
+            cursor:pointer;
+            color:#0f4c81;
+            font-size:18px;
+        }
+        button{
+            width:100%;
+            padding:12px;
+            margin:20px 0;
+            background:#0f4c81;
+            color:#fff;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+            transition:background 0.3s;
+        }
+        button:hover{
+            background:#0a3a5c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <!-- Logo -->
+    <div class="logo">👤</div>
+    
+    <h2>Login</h2>
+    
+    <div class="input-group">
+        <input type="text" id="username" placeholder="Username" required>
+    </div>
+    
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="password-toggle" onclick="togglePassword()">👁</span>
+    </div>
+
+    <!-- Redirect after login -->
+    <button onclick="login()">Login</button>
+</div>
+
+<script>
+    function togglePassword(){
+        const passwordField = document.getElementById('password');
+        const toggleIcon = document.querySelector('.password-toggle');
+        
+        if(passwordField.type === 'password'){
+            passwordField.type = 'text';
+            toggleIcon.innerText = '🙈';
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.innerText = '👁';
+        }
+    }
+    
+    function login(){
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        if(!username || !password){
+            alert('Please enter both username and password');
+            return;
+        }
+        
+        if(username.length < 3){
+            alert('Username must be at least 3 characters');
+            return;
+        }
+        
+        if(password.length < 4){
+            alert('Password must be at least 4 characters');
+            return;
+        }
+        
+        // Login successful, redirect to dashboard
+        window.location.href="dashboard.html";
+    }
+    
+    // Allow Enter key to login
+    document.addEventListener('keypress', function(event){
+        if(event.key === 'Enter'){
+            login();
+        }
+    });
+</script>
+
+</body>
+</html>
